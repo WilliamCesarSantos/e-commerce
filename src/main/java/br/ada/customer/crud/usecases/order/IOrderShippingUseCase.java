@@ -1,4 +1,4 @@
-package br.ada.customer.crud.usecases;
+package br.ada.customer.crud.usecases.order;
 
 import br.ada.customer.crud.model.Order;
 

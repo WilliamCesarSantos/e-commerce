@@ -1,7 +1,7 @@
 package br.ada.customer.crud.integration.controllers.product;
 
 import br.ada.customer.crud.model.Product;
-import br.ada.customer.crud.usecases.IProductUseCase;
+import br.ada.customer.crud.usecases.product.IProductUseCase;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

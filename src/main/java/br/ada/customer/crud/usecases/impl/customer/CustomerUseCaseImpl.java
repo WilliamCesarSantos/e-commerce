@@ -1,8 +1,8 @@
-package br.ada.customer.crud.usecases.impl;
+package br.ada.customer.crud.usecases.impl.customer;
 
 import br.ada.customer.crud.model.Customer;
-import br.ada.customer.crud.usecases.ICustomerUseCase;
-import br.ada.customer.crud.usecases.INotifierUserCase;
+import br.ada.customer.crud.usecases.customer.ICustomerUseCase;
+import br.ada.customer.crud.usecases.INotifierUseCase;
 import br.ada.customer.crud.usecases.repository.ICustomerRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -14,9 +14,9 @@ import java.util.List;
 public class CustomerUseCaseImpl implements ICustomerUseCase {
 
     private ICustomerRepository repository;
-    private INotifierUserCase<Customer> notifier;
+    private INotifierUseCase<Customer> notifier;
 
-    public CustomerUseCaseImpl(ICustomerRepository repository, INotifierUserCase<Customer> notifier) {
+    public CustomerUseCaseImpl(ICustomerRepository repository, INotifierUseCase<Customer> notifier) {
         this.repository = repository;
         this.notifier = notifier;
     }

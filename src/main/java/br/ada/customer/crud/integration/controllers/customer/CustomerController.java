@@ -1,7 +1,7 @@
 package br.ada.customer.crud.integration.controllers.customer;
 
 import br.ada.customer.crud.model.Customer;
-import br.ada.customer.crud.usecases.ICustomerUseCase;
+import br.ada.customer.crud.usecases.customer.ICustomerUseCase;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 

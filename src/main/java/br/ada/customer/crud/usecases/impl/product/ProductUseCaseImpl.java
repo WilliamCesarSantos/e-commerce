@@ -1,7 +1,7 @@
-package br.ada.customer.crud.usecases.impl;
+package br.ada.customer.crud.usecases.impl.product;
 
 import br.ada.customer.crud.model.Product;
-import br.ada.customer.crud.usecases.IProductUseCase;
+import br.ada.customer.crud.usecases.product.IProductUseCase;
 import br.ada.customer.crud.usecases.repository.IProductRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;

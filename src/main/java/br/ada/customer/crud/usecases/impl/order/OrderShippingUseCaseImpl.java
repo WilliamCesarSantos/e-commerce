@@ -1,9 +1,9 @@
-package br.ada.customer.crud.usecases.impl;
+package br.ada.customer.crud.usecases.impl.order;
 
 import br.ada.customer.crud.model.Order;
 import br.ada.customer.crud.model.OrderStatus;
-import br.ada.customer.crud.usecases.IOrderShippingUseCase;
-import br.ada.customer.crud.usecases.IShippingNotifierUseCase;
+import br.ada.customer.crud.usecases.order.IOrderShippingUseCase;
+import br.ada.customer.crud.usecases.order.IShippingNotifierUseCase;
 import br.ada.customer.crud.usecases.repository.IOrderRepository;
 import jakarta.transaction.Transactional;
 
