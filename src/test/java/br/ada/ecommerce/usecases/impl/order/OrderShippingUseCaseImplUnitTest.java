@@ -10,10 +10,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class OrderShippingUseCaseImplUnitTest {
 
     private OrderShippingUseCaseImpl useCase;
-    private Order order;
 
     private IOrderRepository repository;
     private IShippingNotifierUseCase notifier;
@@ -28,7 +31,7 @@ public class OrderShippingUseCaseImplUnitTest {
 
     @Test
     public void pedido_so_deve_ser_entregue_se_estiver_pago() {
-        // Criar dados compatíveis com os testes
+        // Criar dados compatíveis com o teste
         Order order = new Order();
         order.setStatus(OrderStatus.PAID);
 
@@ -42,12 +45,10 @@ public class OrderShippingUseCaseImplUnitTest {
         order.setStatus(OrderStatus.OPEN);
 
         Assertions.assertThrows(RuntimeException.class,
-                new Executable() {
-                    @Override
-                    public void execute() throws Throwable {
-                        useCase.shipping(order);
-                    }
-                });
+                ()/*new Executable() {*/ -> /*public void execute() {*/
+                        useCase.shipping(order)
+                /*}}*/
+            );//Lambda
     }
 
     @Test
@@ -57,6 +58,7 @@ public class OrderShippingUseCaseImplUnitTest {
 
         useCase.shipping(order);
 
+        //Verique(onde, quantidade de vezes).acao
         Mockito.verify(notifier, Mockito.times(1))
                 .notify(order);
     }
