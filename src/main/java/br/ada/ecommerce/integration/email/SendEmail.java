@@ -20,6 +20,7 @@ public class SendEmail {
     public void send(String from, List<String> to, String subject, String content) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
         message.setFrom(from);
+        //to.stream().collect(Collectors.joining(",")) - Converter uma lista de email [one@test.com, two@test.com] para uma String "one@test.com,two@test.com"
         message.setRecipients(MimeMessage.RecipientType.TO, to.stream().collect(Collectors.joining(",")));
         message.setSubject(subject);
         message.setText(content);

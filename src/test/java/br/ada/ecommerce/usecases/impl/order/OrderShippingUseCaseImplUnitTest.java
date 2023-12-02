@@ -5,29 +5,23 @@ import br.ada.ecommerce.model.OrderStatus;
 import br.ada.ecommerce.usecases.order.IShippingNotifierUseCase;
 import br.ada.ecommerce.usecases.repository.IOrderRepository;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
+@ExtendWith(SpringExtension.class)
 public class OrderShippingUseCaseImplUnitTest {
 
+    @InjectMocks
     private OrderShippingUseCaseImpl useCase;
 
+    @Mock
     private IOrderRepository repository;
+    @Mock
     private IShippingNotifierUseCase notifier;
-
-    @BeforeEach
-    public void setup() {
-        repository = Mockito.mock(IOrderRepository.class);
-        notifier = Mockito.mock(IShippingNotifierUseCase.class);
-
-        useCase = new OrderShippingUseCaseImpl(repository, notifier);
-    }
 
     @Test
     public void pedido_so_deve_ser_entregue_se_estiver_pago() {
@@ -48,7 +42,7 @@ public class OrderShippingUseCaseImplUnitTest {
                 ()/*new Executable() {*/ -> /*public void execute() {*/
                         useCase.shipping(order)
                 /*}}*/
-            );//Lambda
+        );//Lambda
     }
 
     @Test

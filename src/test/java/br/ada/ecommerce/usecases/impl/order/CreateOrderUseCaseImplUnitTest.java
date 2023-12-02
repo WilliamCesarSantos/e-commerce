@@ -8,17 +8,25 @@ import br.ada.ecommerce.usecases.repository.IOrderRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-public class CreateOrderUseCaseImplTest {
+@ExtendWith(SpringExtension.class)
+public class CreateOrderUseCaseImplUnitTest {
 
     private Customer customer;
 
     //1
+    @InjectMocks
     private CreateOrderUseCaseImpl useCase;
 
     //2 objetos
+    @Mock
     private IOrderRepository orderRepository;
+    @Mock
     private ICustomerRepository customerRepository;
 
     //3
@@ -26,11 +34,6 @@ public class CreateOrderUseCaseImplTest {
     public void setup() {
         customer = new Customer();
         customer.setDocument("unit-test");
-
-        orderRepository = Mockito.mock(IOrderRepository.class);
-        customerRepository = Mockito.mock(ICustomerRepository.class);
-
-        useCase = new CreateOrderUseCaseImpl(orderRepository, customerRepository);
 
         Mockito.when(customerRepository.findByDocument(Mockito.any()))/*Método que será chamado pela execução do programa*/
                 .thenReturn(customer);/*Retorno que deve ser feito para essa chamada*/
