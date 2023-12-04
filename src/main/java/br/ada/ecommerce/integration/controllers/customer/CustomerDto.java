@@ -1,5 +1,6 @@
 package br.ada.ecommerce.integration.controllers.customer;
 
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
@@ -9,6 +10,7 @@ public class CustomerDto {
 
     private Long id;
     @NotNull
+    @NotEmpty
     private String name;
     @NotNull
     private String document;

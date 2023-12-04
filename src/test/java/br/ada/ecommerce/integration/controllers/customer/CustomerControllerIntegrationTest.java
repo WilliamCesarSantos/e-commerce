@@ -1,6 +1,7 @@
 package br.ada.ecommerce.integration.controllers.customer;
 
 import br.ada.ecommerce.usecases.customer.ICustomerUseCase;
+import org.hamcrest.core.Is;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -30,6 +31,53 @@ public class CustomerControllerIntegrationTest {
                 MockMvcRequestBuilders.post("/customers")
                         .content("""
                                 {
+                                    "document": "0000",
+                                    "email" : ["one@teste.com"],
+                                    "telephone": ["999999"],
+                                    "birthDate": "2020-01-01"
+                                }
+                                """)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andDo(
+                MockMvcResultHandlers.print()
+        ).andExpect(//andExpect é um assert dessa forma de teste
+                MockMvcResultMatchers.status().isBadRequest()
+        );
+    }
+
+    @Test
+    public void nao_deve_ser_possivel_cadastrar_cliente_sem_document() throws Exception {
+        // O teste garante que ao receber um cliente sem a informação de nome a
+        // aplicação irá retornar o status code 400
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/customers")
+                        .content("""
+                                {
+                                    "name": "0000",
+                                    "email" : ["one@teste.com"],
+                                    "telephone": ["999999"],
+                                    "birthDate": "2020-01-01"
+                                }
+                                """)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andDo(
+                MockMvcResultHandlers.print()
+        ).andExpect(//andExpect é um assert dessa forma de teste
+                MockMvcResultMatchers.status().isBadRequest()
+        );
+    }
+
+    @Test
+    public void nao_deve_ser_possivel_cadastrar_cliente_sem_informar_o_nome() throws Exception {
+        // O teste garante que ao receber um cliente sem a informação de nome a
+        // aplicação irá retornar o status code 400
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/customers")
+                        .content("""
+                                {
+                                    "name": "",
                                     "document": "0000",
                                     "email" : ["one@teste.com"],
                                     "telephone": ["999999"],
