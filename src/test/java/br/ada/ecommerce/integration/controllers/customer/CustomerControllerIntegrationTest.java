@@ -1,8 +1,9 @@
 package br.ada.ecommerce.integration.controllers.customer;
 
+import br.ada.ecommerce.model.Customer;
 import br.ada.ecommerce.usecases.customer.ICustomerUseCase;
-import org.hamcrest.core.Is;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -66,6 +67,39 @@ public class CustomerControllerIntegrationTest {
                 MockMvcResultHandlers.print()
         ).andExpect(//andExpect é um assert dessa forma de teste
                 MockMvcResultMatchers.status().isBadRequest()
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.errors[0].document")
+                        .value("must not be null")
+        );
+    }
+
+    @Test
+    public void cliente_com_todas_as_informacoes_deve_ser_cadastrado() throws Exception {
+        //Mockito.when(useCase.create(Mockito.any())).thenReturn(new Customer());
+        // Quando o método é void, a forma de utilização do mockito modifica um pouco
+        Mockito.doAnswer(invocationOnMock -> {
+            Customer customer = (Customer) invocationOnMock.getArgument(0);
+            customer.setId(123l);
+            return null;
+        }).when(useCase).create(Mockito.any());
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/customers")
+                        .content("""
+                                {
+                                    "name": "Will",
+                                    "document":"000"
+                                }
+                                """)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andDo(
+                MockMvcResultHandlers.print()
+        ).andExpect(//andExpect é um assert dessa forma de teste
+                MockMvcResultMatchers.status().is2xxSuccessful()
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.id")
+                        .exists()
         );
     }
 
