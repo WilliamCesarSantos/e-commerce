@@ -14,6 +14,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.List;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CustomerControllerIntegrationTest {
@@ -124,6 +126,29 @@ public class CustomerControllerIntegrationTest {
                 MockMvcResultHandlers.print()
         ).andExpect(//andExpect é um assert dessa forma de teste
                 MockMvcResultMatchers.status().isBadRequest()
+        );
+    }
+
+    @Test
+    public void deve_listar_cliente_existentes() throws Exception {
+        Customer customer = new Customer();
+        customer.setId(123l);
+        customer.setName("Will");
+        customer.setDocument("0000");
+        Mockito.when(useCase.list()).thenReturn(List.of(customer));
+
+        // O teste garante que ao receber um cliente sem a informação de nome a
+        // aplicação irá retornar o status code 400
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/customers")
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andDo(
+                MockMvcResultHandlers.print()
+        ).andExpect(//andExpect é um assert dessa forma de teste
+                MockMvcResultMatchers.status().is2xxSuccessful()
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$[0].name")
+                        .value("Will")
         );
     }
 
