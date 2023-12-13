@@ -26,8 +26,14 @@ public class CustomerController {
     }
 
     @GetMapping
-    public List<CustomerDto> list() {
-        return customerUseCase.list().stream()
+    public List<CustomerDto> list(@RequestParam(value = "name", required = false) String name) {
+        List<Customer> found = null;
+        if (name == null) {
+            found = customerUseCase.list();
+        } else {
+            found = customerUseCase.findByName(name);
+        }
+        return found.stream()
                 .map(this::toDto).collect(Collectors.toList());
     }
 
