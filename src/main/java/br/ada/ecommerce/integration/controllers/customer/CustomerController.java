@@ -3,6 +3,7 @@ package br.ada.ecommerce.integration.controllers.customer;
 import br.ada.ecommerce.model.Customer;
 import br.ada.ecommerce.usecases.customer.ICustomerUseCase;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class CustomerController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public CustomerDto create(@Valid @RequestBody CustomerDto dto) {
         Customer customer = fromDto(dto);
         customerUseCase.create(customer);
